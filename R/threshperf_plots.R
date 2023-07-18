@@ -25,7 +25,7 @@
 #' data(single_model_dataset)
 #' threshperf(single_model_dataset, outcome = 'outcomes', prediction = 'predictions')
 #' @export
-threshperf <- function(df, outcome, prediction, positive = 'has_sepsis',
+threshperf <- function(df, outcome, prediction, positive,
                        thresholds = NULL,
                        statistics = c("sens", "spec", "ppv", "npv"),
                        prevalence = NULL) {
@@ -168,7 +168,7 @@ threshperf_plot <- function(df, outcome, prediction, show_denom = TRUE, plot_tit
                             post_tp_geoms = NULL,
                             post_dist_geoms = NULL,
                             heights = c(10,1),
-                            widths = c(1,2,1),positive = 'has_sepsis', thresholds = NULL) {
+                            widths = c(1,2,1),positive, thresholds = NULL) {
   tp_data = threshperf(df, outcome, prediction, thresholds)
   tp_data =
     tp_data %>%
