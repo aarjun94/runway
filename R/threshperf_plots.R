@@ -25,7 +25,7 @@
 #' data(single_model_dataset)
 #' threshperf(single_model_dataset, outcome = 'outcomes', prediction = 'predictions')
 #' @export
-threshperf <- function(df, outcome, prediction, positive = 'has_sepsis',
+threshperf <- function(df, outcome, prediction, positive,
                        thresholds = NULL,
                        statistics = c("sens", "spec", "ppv", "npv"),
                        prevalence = NULL) {
@@ -45,12 +45,18 @@ threshperf <- function(df, outcome, prediction, positive = 'has_sepsis',
 
   df_orig <- df
 
-  # IMPORTANT because order of levels matters to yardstick
-  if (getOption('yardstick.event_first', default = TRUE)) {
-    df[[outcome]] <- factor(df[[outcome]], levels = c(1,0))
-  } else {
+  # # IMPORTANT because order of levels matters to yardstick
+  # if (getOption('yardstick.event_first', default = TRUE)) {
+  #   df[[outcome]] <- factor(df[[outcome]], levels = c(1,0))
+  # } else {
+  #   df[[outcome]] <- factor(df[[outcome]], levels = c(0,1))
+  # }
+
+  if positive == levels(df$outcome %>% as.factor())[1] {
+    df[[outcome]] <- factor(df[[outcome]],levels = c(1,0))
+    } else (
     df[[outcome]] <- factor(df[[outcome]], levels = c(0,1))
-  }
+    }
 
   df <-
     df %>%
